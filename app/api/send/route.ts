@@ -1,19 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
 import type { Attachment } from "nodemailer/lib/mailer";
-//import { Redis } from "@upstash/redis";
-//import { Ratelimit } from "@upstash/ratelimit";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
+import nodemailer from "nodemailer";
 
-//  ︎ 5 richieste / 10 minuti per IP
-// const ratelimit = new Ratelimit({
-//   redis: Redis.fromEnv(),          // UPSTASH_REDIS_REST_URL & _TOKEN
-//   limiter: Ratelimit.fixedWindow(5, "10 m"),
-//   analytics: true,                 // opzionale: log automatico
-// });
+//  ︎5 richieste / 10 minuti per IP
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.fixedWindow(5, "10 m"),
+  analytics: true, // logging
+});
 
 export async function POST(req: NextRequest) {
-  //const ip = req.ip ?? "unknown";
-  return NextResponse.json({ success: false, error: `Ecco qui: ${req.headers.get("x-forwarded-for")} oppure ${req.headers.get("x-real-ip")}` });
+  const ip = req.headers.get("x-forwarded-for")?.split(",").splice(-3, 1)[0];
+  if (ip === undefined) {
+    return NextResponse.json(
+      { error: "IP address error" },
+      { status: 400 },
+    );
+  }
+  const { success } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return NextResponse.json(
+      { error: "Troppi tentativi. Riprova più tardi." },
+      { status: 429 },
+    );
+  }
   const data = await req.formData();
   const name = data.get("name");
   const email = data.get("email");
