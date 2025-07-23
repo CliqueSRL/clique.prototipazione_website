@@ -2,7 +2,7 @@ import './globals.css';
 
 export const metadata = {
   title: 'Proto-Clique',
-  description: 'Una sola pagina, solo CSS',
+  description: 'Prototipazione da CliqueSRL',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
