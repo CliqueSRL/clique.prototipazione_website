@@ -1,32 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { Attachment } from "nodemailer/lib/mailer";
-import { Ratelimit } from "@upstash/ratelimit";
-import { Redis } from "@upstash/redis";
+import { assertNotRateLimited } from "@/lib/rateLimit";
 import nodemailer from "nodemailer";
-
-//  ︎5 richieste / 10 minuti per IP
-const ratelimit = new Ratelimit({
-  redis: Redis.fromEnv(),
-  limiter: Ratelimit.fixedWindow(5, "10 m"),
-  analytics: true, // logging
-});
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for")?.split(",").splice(-3, 1)[0];
-  if (ip === undefined) {
+  if (!ip) {
     return NextResponse.json(
-      { error: "IP address error" },
+      { success: false, error: "Indirizzo IP non trovato." },
       { status: 400 },
     );
   }
-  const { success } = await ratelimit.limit(ip);
-
-  if (!success) {
+  try {
+    await assertNotRateLimited(ip);
+  } catch {
     return NextResponse.json(
-      { error: "Troppi tentativi. Riprova più tardi." },
+      { success: false, error: "Troppi tentativi. Riprova più tardi." },
       { status: 429 },
     );
   }
+
   const data = await req.formData();
   const name = data.get("name");
   const email = data.get("email");
