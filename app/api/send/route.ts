@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import type { Attachment } from "nodemailer/lib/mailer";
-import { Redis } from "@upstash/redis";
-import { Ratelimit } from "@upstash/ratelimit";
+//import { Redis } from "@upstash/redis";
+//import { Ratelimit } from "@upstash/ratelimit";
 
 //  ︎ 5 richieste / 10 minuti per IP
 const ratelimit = new Ratelimit({
@@ -12,7 +12,7 @@ const ratelimit = new Ratelimit({
 });
 
 export async function POST(req: NextRequest) {
-  const ip = req.ip ?? "unknown";
+  //const ip = req.ip ?? "unknown";
   const data = await req.formData();
   const name = data.get("name");
   const email = data.get("email");
