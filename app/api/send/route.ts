@@ -13,7 +13,7 @@ import type { Attachment } from "nodemailer/lib/mailer";
 
 export async function POST(req: NextRequest) {
   //const ip = req.ip ?? "unknown";
-  return NextResponse.json({ success: false, error: `Ecco qui: ${req.headers.get("fastly-client-ip")}` });
+  return NextResponse.json({ success: false, error: `Ecco qui: ${req.headers.get("x-forwarded-for")} oppure ${req.headers.get("x-real-ip")}` });
   const data = await req.formData();
   const name = data.get("name");
   const email = data.get("email");
