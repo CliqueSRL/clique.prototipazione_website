@@ -5,11 +5,11 @@ import type { Attachment } from "nodemailer/lib/mailer";
 //import { Ratelimit } from "@upstash/ratelimit";
 
 //  ︎ 5 richieste / 10 minuti per IP
-const ratelimit = new Ratelimit({
-  redis: Redis.fromEnv(),          // UPSTASH_REDIS_REST_URL & _TOKEN
-  limiter: Ratelimit.fixedWindow(5, "10 m"),
-  analytics: true,                 // opzionale: log automatico
-});
+// const ratelimit = new Ratelimit({
+//   redis: Redis.fromEnv(),          // UPSTASH_REDIS_REST_URL & _TOKEN
+//   limiter: Ratelimit.fixedWindow(5, "10 m"),
+//   analytics: true,                 // opzionale: log automatico
+// });
 
 export async function POST(req: NextRequest) {
   //const ip = req.ip ?? "unknown";
