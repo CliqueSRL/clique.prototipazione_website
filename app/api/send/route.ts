@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
   try {
     await transporter.sendMail({
       from: `"${name}" <prototipazione@cliquesrl.it>`,
-      to: "daniele.cliquesrl@gmail.com",
+      to: "leonardo@cliquesrl.it",
       subject: "Nuovo progetto dal sito",
       text: `Nome: ${name}\nEmail: ${email}\nTelefono: ${phone}\nMessaggio: ${message}`,
       attachments, 
