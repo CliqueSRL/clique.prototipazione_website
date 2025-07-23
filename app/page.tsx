@@ -150,7 +150,6 @@ export default function Home() {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("QUI")
     e.preventDefault();
     setSending(true);
     setSent(null);
@@ -209,7 +208,7 @@ export default function Home() {
       <section className="hero" style={{ position: "relative" }}>
         <h1>Proto-Clique</h1>
         <p>
-          Il tuo Partner per la <strong>Progettazione</strong> e la{" "}
+          Il tuo partner per la <strong>Progettazione</strong> e la{" "}
           <strong>
             <span className="nowrap">Stampa 3d</span>
           </strong>
