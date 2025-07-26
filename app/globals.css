@@ -18,6 +18,12 @@ main {
   align-items: center;
 }
 
+.field-error {
+  margin-top: 6px;
+  color: #e74c3c;
+  font-size: 0.9rem;
+}
+
 /* HERO */
 .hero {
   text-align: center;
@@ -375,13 +381,13 @@ input:-webkit-autofill:active {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
-  max-height: 900px; /* altezza normale */
+  overflow: visible;
+  max-height: none;
   transition: max-height 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .upload.expanded {
   min-height: 300px;
-  max-height: 950px; /* altezza espansa */
+  max-height: none;
   transition: max-height 0.8s cubic-bezier(0.22, 1, 0.36, 1);  
 }
 
