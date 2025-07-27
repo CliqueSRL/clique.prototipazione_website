@@ -2,6 +2,17 @@
 import React, { useEffect, useState } from "react";
 import { FiCopy } from "react-icons/fi";
 
+export const metadata = {
+  title: "Prototipazione - CliqueSRL",
+  description:
+    "Proto-Clique è il tuo partner per la progettazione e stampa 3D. Condividi il tuo progetto e ricevi un'offerta personalizzata.",
+  openGraph: {
+    title: "Prototipazione - CliqueSRL",
+    description:
+      "Proto-Clique è il tuo partner per la progettazione e stampa 3D. Condividi il tuo progetto e ricevi un'offerta personalizzata.",
+  },
+};
+
 export default function Home() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
